@@ -1,0 +1,5 @@
+title: Access Auto Garage
+description: A car garage themed site for demonstrating a DevOps pipeline.
+theme: minima
+exclude:
+  - README.md
