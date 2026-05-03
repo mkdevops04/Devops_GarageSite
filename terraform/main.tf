@@ -32,13 +32,31 @@ resource "aws_s3_bucket_public_access_block" "garage_bucket_pab" {
   restrict_public_buckets = true
 }
 
-# Enable encryption
+# KMS key for S3 encryption
+resource "aws_kms_key" "garage_bucket_key" {
+  description             = "KMS key for garage S3 bucket encryption"
+  deletion_window_in_days = 7
+
+  tags = {
+    Environment = "learning"
+    ManagedBy   = "terraform"
+    Project     = "Access Auto Garage"
+  }
+}
+
+resource "aws_kms_alias" "garage_bucket_key_alias" {
+  name          = "alias/garage-bucket-key"
+  target_key_id = aws_kms_key.garage_bucket_key.key_id
+}
+
+# Enable encryption with KMS
 resource "aws_s3_bucket_server_side_encryption_configuration" "garage_bucket_sse" {
   bucket = aws_s3_bucket.garage_bucket.id
 
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
+      sse_algorithm     = "aws:kms"
+      kms_master_key_id = aws_kms_key.garage_bucket_key.arn
     }
   }
 }
