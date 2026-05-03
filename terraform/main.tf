@@ -36,6 +36,7 @@ resource "aws_s3_bucket_public_access_block" "garage_bucket_pab" {
 resource "aws_kms_key" "garage_bucket_key" {
   description             = "KMS key for garage S3 bucket encryption"
   deletion_window_in_days = 7
+  enable_key_rotation     = true 
 
   tags = {
     Environment = "learning"
