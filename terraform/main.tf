@@ -20,4 +20,3 @@ terraform {
         Project   = "Access Auto Garage"
     }
 }
-
