@@ -1,4 +1,4 @@
-FROM jekyll/jekyll:latest
+FROM jekyll/jekyll:4.2.2 AS builder
 
 WORKDIR /srv/jekyll
 
@@ -12,6 +12,6 @@ COPY . .
 RUN jekyll build
 
 FROM nginx:alpine
-COPY --from=0 /srv/jekyll/_site /usr/share/nginx/html
+COPY --from=builder /srv/jekyll/_site /usr/share/nginx/html
 
 EXPOSE 80
