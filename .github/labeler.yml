@@ -1,0 +1,13 @@
+content:
+  - _posts/**
+  - index.md
+
+infrastructure:
+  - terraform/**
+
+ci:
+  - .github/workflows/**
+
+dependencies:
+  - Gemfile
+  - Gemfile.lock
